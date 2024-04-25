@@ -2,7 +2,7 @@ footer {
   background-color: #f8f9fa;
   padding: 1rem;
   text-align: center;
-  position: fixed;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;
@@ -22,4 +22,8 @@ footer {
 
 .footer-link:hover {
   color: #007bff;
+}
+
+.content-wrapper {
+  padding-bottom: 1rem;
 }
