@@ -13,4 +13,6 @@ import { FooterComponent } from './footer/footer.component';
 })
 export class AppComponent {
   title = 'financify';
+  imageUrl =
+    'https://res.cloudinary.com/daqpjdyeu/image/upload/v1696212452/cld-sample-4.jpg';
 }
