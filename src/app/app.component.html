@@ -23,3 +23,5 @@
 </header>
 
 <router-outlet></router-outlet>
+<app-child [data]="parentData" (messageEvent)="receiveMessage($event)"></app-child>
+<p>{{ message }}</p>
