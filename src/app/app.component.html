@@ -17,11 +17,14 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/form" routerLinkActive="active">Form</a>
+        </li>
       </ul>
     </div>
   </nav>
 </header>
 
 <router-outlet></router-outlet>
-<app-child [data]="parentData" (messageEvent)="receiveMessage($event)"></app-child>
-<p>{{ message }}</p>
+<!-- <app-child [data]="parentData" (messageEvent)="receiveMessage($event)"></app-child>
+<p>{{ message }}</p> -->
