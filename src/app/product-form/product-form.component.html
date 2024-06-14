@@ -1,4 +1,4 @@
-<form [formGroup]="productForm" (ngSubmit)="submitForm()">
+<form [formGroup]="productForm" (ngSubmit)="createProduct()">
   <!-- campos do formulário -->
   <label>
     Nome do produto:
@@ -27,5 +27,5 @@
         alfabéticos, numéricos e espaços em branco.</p>
     </div>
   </label>
-  <button type="submit" [disabled]="productForm.invalid">Enviar</button>
+  <button type="submit" [disabled]="productForm.invalid">Criar Produto</button>
 </form>

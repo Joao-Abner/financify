@@ -10,6 +10,7 @@ import { ContactComponent } from './contact/contact.component';
 import { ChildComponent } from './child/child.component';
 import { DetailsComponent } from './details/details.component';
 import { ProductFormComponent } from './product-form/product-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,12 @@ import { ProductFormComponent } from './product-form/product-form.component';
     DetailsComponent,
     ProductFormComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

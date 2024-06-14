@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  ValidationErrors,
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-product-form',
@@ -18,12 +14,30 @@ export class ProductFormComponent {
     description: new FormControl('', Validators.required),
   });
 
+  constructor(private productService: ProductService) {}
+
+  async createProduct() {
+    try {
+      if (this.productForm.valid) {
+        const createdProduct = await this.productService.createProduct(
+          this.productForm.value
+        );
+        console.log('Produto criado:', createdProduct);
+      } else {
+        console.log('Formulário inválido');
+      }
+    } catch (error) {
+      console.error('Erro:', error);
+    }
+  }
+
   submitForm() {
-    if (this.productForm?.valid) {
+    if (this.productForm.valid) {
       // Cadastrar a entidade no Web Storage
       localStorage.setItem('product', JSON.stringify(this.productForm.value));
+      this.createProduct();
     } else {
-      // Formulário inválido, você pode apresentar os erros aqui
+      // Formulário inválido
       const errors = this.productForm?.get('name')?.errors;
       if (errors?.['required']) {
         console.log('Erro no campo nome:', errors['required']);
