@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ShowAdvicesComponent } from './show-advices/show-advices.component';
 
-@Component({
+@Component ({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [CommonModule, HttpClientModule, ShowAdvicesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

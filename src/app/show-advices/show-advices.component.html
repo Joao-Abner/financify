@@ -1,0 +1,10 @@
+<div class="container">
+  <h1>Chuck Norris Jokes API</h1>
+  <button (click)="fetchAdvices()">Gerar piadas</button>
+
+  <div *ngIf="loading">Loading...</div>
+
+  <ul *ngIf="!loading && advices.length > 0">
+    <li *ngFor="let advice of advices">{{ advice | uppercase}}</li>
+  </ul>
+</div>
