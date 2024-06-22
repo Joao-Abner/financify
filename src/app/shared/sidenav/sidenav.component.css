@@ -1,9 +1,86 @@
-ul {
-  list-style-type: none;
-  background-color: #72A1CC;
-  border-radius: 20px;
+ul .active {
+  color: #1D72C0;
+  font-weight: bold; 
 }
 
-li {
-  margin: 15px 30px 15px 0px;
+#navbarNav {
+  list-style-type: none;
+  padding-left: 0;
+  background-color: #72A1CC;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#navbarNav li {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.navbar-toggler {
+  background-color: transparent;
+  border: none;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+}
+
+.bi-list {
+  color: #000;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+@media (min-width: 576px) {
+  #navbarNav {
+    flex-direction: row;
+    height: 40vh;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  #navbarNav li {
+    margin-bottom: 0;
+    margin-right: 15px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #navbarNav li a {
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  #navbarNav {
+    flex-direction: column;
+    background-color: #72A1CC;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    padding-top: 60px;
+    transition: all 0.3s ease;
+    border-radius: 0;
+  }
+
+  #navbarNav.show {
+    left: 0;
+  }
+
+  .navbar-toggler {
+    position: absolute;
+    top: 80px;
+    left: 10px;
+    z-index: 0;
+  }
+
+  #navbarNav li {
+    text-align: center;
+  }
 }
