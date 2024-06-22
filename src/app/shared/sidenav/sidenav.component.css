@@ -1,0 +1,9 @@
+ul {
+  list-style-type: none;
+  background-color: #72A1CC;
+  border-radius: 20px;
+}
+
+li {
+  margin: 15px 30px 15px 0px;
+}
