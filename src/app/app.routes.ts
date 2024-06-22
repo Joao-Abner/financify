@@ -15,16 +15,17 @@ export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'transactions', component: TransactionsComponent },
-  { path: 'extract', component: ExtractComponent},
-  { path: 'accounts', component: AccountsComponent},
-  { path: 'ccards', component: CcardsComponent},
-  { path: 'goals', component: GoalsComponent},
+  { path: 'extract', component: ExtractComponent },
+  { path: 'accounts', component: AccountsComponent },
+  { path: 'ccards', component: CcardsComponent },
+  { path: 'goals', component: GoalsComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
 export class AppRountingModule {}
