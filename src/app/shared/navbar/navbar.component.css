@@ -8,6 +8,10 @@ a {
   text-decoration: none;
 }
 
+i {
+  cursor: pointer;
+}
+
 .accountProfile {
   font-size: 50px;
   line-height: 1;
@@ -16,4 +20,9 @@ a {
 .navbar-brand {
   display: flex;
   align-items: center;
+}
+
+p {
+  text-align: center;
+  font-size: large;
 }

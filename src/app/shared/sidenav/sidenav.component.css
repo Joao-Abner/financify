@@ -75,9 +75,17 @@ ul .active {
 
   .navbar-toggler {
     position: absolute;
-    top: 80px;
-    left: 10px;
+    bottom: 10px;
+    left: 45%;
     z-index: 0;
+    background: rgb(0,189,132);
+    background: linear-gradient(90deg, rgba(0,189,132,1) 0%, #000458 100%);
+    border-radius: 50px;
+    padding: 1px;
+  }
+
+  .bi-list {
+    color: aliceblue;
   }
 
   #navbarNav li {
