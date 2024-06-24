@@ -13,9 +13,5 @@ export class HomeComponent {
   currentUser: any;
 
   constructor(private authService: AuthService) {}
-  
-  ngOnInit() {
-    this.currentUser = this.authService.getCurrentUser();
-  }
 
 }

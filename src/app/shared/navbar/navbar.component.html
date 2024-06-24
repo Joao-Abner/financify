@@ -3,8 +3,26 @@
     <a class="navbar-brand" href="#">
       <img src="assets/images/logo-financify.png" alt="Logo Financify" width="80" height="57,53">
     </a>
-    <a class="navbar-brand "  href="#">
+    <a class="navbar-brand" (click)="getUser()" data-bs-toggle="modal" data-bs-target="#accountModal">
       <i class="bi bi-person-circle accountProfile"></i>
     </a>
   </div>
 </nav>
+
+<div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="accountModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="accountModalLabel">Seu Perfil</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Seja bem-vindo {{ currentUser | titlecase }}</p>
+        <p><i class="bi bi-person-circle accountProfile"></i></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="logout()" data-bs-dismiss="modal">Sair</button>
+      </div>
+    </div>
+  </div>
+</div>
