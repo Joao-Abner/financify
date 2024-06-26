@@ -1,1 +1,36 @@
-<app-sidenav></app-sidenav>
+<main class="container-fluid d-flex flex-column w-75">
+  <div class="container bg-main-info justify-content-center mt-4 mb-4 p-4 rounded">
+    <h2 class="main-title text-white">Adicionar Transação</h2>
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="type" class="form-label text-white">Tipo</label>
+        <select id="type" class="form-select" formControlName="type">
+          <option value="income">Receita</option>
+          <option value="expense">Despesa</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="amount" class="form-label text-white">Valor</label>
+        <input type="number" id="amount" class="form-control" formControlName="amount">
+        <div *ngIf="transactionForm.get('amount')?.invalid && transactionForm.get('amount')?.dirty" class="text-danger">
+          O valor deve ser maior ou igual a 0.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="date" class="form-label text-white">Data</label>
+        <input id="date" type="text" class="form-control" formControlName="date" placeholder="dd/mm/yyyy">
+        <div *ngIf="transactionForm.get('date')?.invalid && transactionForm.get('date')?.dirty" class="text-danger">
+          A data é necessária.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label text-white">Descrição</label>
+        <input type="text" id="description" class="form-control" formControlName="description">
+        <div *ngIf="transactionForm.get('description')?.invalid && transactionForm.get('description')?.dirty" class="text-danger">
+          Descrição é necessária.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-custom" [disabled]="transactionForm.invalid">Registrar</button>
+    </form>
+  </div>
+</main>

@@ -1,4 +1,4 @@
-<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-5">
+<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-5 ms-5">
   <button class="navbar-toggler d-block d-sm-none" type="button" (click)="toggleNavbar()" [attr.aria-expanded]="isNavbarOpen ? 'true' : 'false'" aria-controls="navbarNav">
     <span class="bi bi-list"></span>
   </button>
@@ -7,7 +7,7 @@
     <li [class.active]="isActive('/')" (click)="goTo('/')"><i class="bi bi-house"></i> Início</li>
     <li [class.active]="isActive('/transactions')" (click)="goTo('/transactions')"><i class="bi bi-plus-lg"></i> Registrar Transação</li>
     <li [class.active]="isActive('/extract')" (click)="goTo('/extract')"><i class="bi bi-journal-text"></i> Extrato</li>
-    <li [class.active]="isActive('/accounts')" (click)="goTo('/accounts')"><i class="bi bi-bank"></i> Minhas contas</li>
+    <li [class.active]="isActive('/accounts')" (click)="goTo('/accounts')"><i class="bi bi-bank"></i> Cotações</li>
     <li [class.active]="isActive('/ccards')" (click)="goTo('/ccards')"><i class="bi bi-credit-card-fill"></i> Cartões</li>
     <li [class.active]="isActive('/goals')" (click)="goTo('/goals')"><i class="bi bi-bullseye"></i> Objetivos</li>
   </ul>
