@@ -1,0 +1,74 @@
+.container {
+  margin-top: 20px;
+}
+
+.modal .modal-dialog {
+  max-width: 500px;
+}
+
+.btn-custom {
+  background-color: #000458;
+  border: none;
+  color: aliceblue;
+  padding: 0.5vw 1vw;
+  font-size: 1.5vw;
+  border-radius: 0.5vw;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #00bd84;
+  color: black;
+}
+
+.btn-custom:disabled {
+  background-color: #414474;
+  cursor: not-allowed;
+}
+
+.container-fluid {
+  padding: 1vw 2vw;
+}
+
+.form-label {
+  font-size: 1.5vw;
+}
+
+.form-control {
+  font-size: 1.5vw;
+  padding: 0.5vw;
+}
+
+.mb-3 {
+  margin-bottom: 1.5vw;
+}
+
+@media (max-width: 575px) {
+  main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .router-container {
+    width: 100%;
+    padding: 5vw;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, .form-label, .card-title, .card-text {
+    font-size: 4vw;
+  }
+
+  .btn {
+    font-size: 4vw;
+    padding: 3vw 5vw;
+  }
+
+  .list-group-item {
+    font-size: 4vw;
+  }
+
+  .form-control, .form-select {
+    font-size: 4vw;
+    padding: 3vw;
+  }
+}

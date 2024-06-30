@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 export interface Transaction {
   id?: number;
@@ -14,73 +15,67 @@ export interface Transaction {
   providedIn: 'root'
 })
 export class TransactionService {
-  private apiUrl = 'http://localhost:3000/transactions';
-  private balanceUrl = 'http://localhost:3000/saldo';
+  private baseUrl = 'http://localhost:3000/users';
 
   private transactionsSubject = new BehaviorSubject<Transaction[]>([]);
-  private balanceSubject = new BehaviorSubject<number>(0);
-
   transactions$ = this.transactionsSubject.asObservable();
-  balance$ = this.balanceSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.loadInitialData();
   }
 
   private loadInitialData(): void {
-    this.getTransactions().subscribe(transactions => this.transactionsSubject.next(transactions));
-    this.getBalance().subscribe(balance => this.balanceSubject.next(balance));
+    // Implementar carregamento inicial de dados, se necessário
   }
 
-  getTransactions(): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(this.apiUrl);
+  getTransactions(userId: number): Observable<Transaction[]> {
+    const url = `${this.baseUrl}/${userId}/transactions`;
+    return this.http.get<Transaction[]>(url).pipe(
+      tap(transactions => this.transactionsSubject.next(transactions))
+    );
   }
 
-  addTransaction(transaction: Transaction): Observable<Transaction> {
-    return this.http.post<Transaction>(this.apiUrl, transaction).pipe(
+  addTransaction(userId: number, transaction: Transaction): Observable<Transaction> {
+    const url = `${this.baseUrl}/${userId}/transactions`;
+    return this.http.post<Transaction>(url, transaction).pipe(
       tap(newTransaction => {
-        this.transactionsSubject.next([...this.transactionsSubject.getValue(), newTransaction]);
-        this.updateBalance(newTransaction);
-      })
-    );
-  }
-
-  getBalance(): Observable<number> {
-    return this.http.get<any>(this.balanceUrl).pipe(
-      map((saldo: any) => saldo.total as number)
-    );
-  }
-
-  private updateBalance(transaction: Transaction, isDeletion = false): void {
-    const currentBalance = this.balanceSubject.getValue();
-    const balanceUpdate = transaction.type === 'income' ? transaction.amount : -transaction.amount;
-    const newBalance = isDeletion ? currentBalance - balanceUpdate : currentBalance + balanceUpdate;
-
-    this.balanceSubject.next(newBalance);
-    this.http.put<number>(this.balanceUrl, { total: newBalance }).subscribe();
-  }
-
-  deleteTransaction(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
-      switchMap(() => {
         const currentTransactions = this.transactionsSubject.getValue();
-        const transactionToDelete = currentTransactions.find(transaction => transaction.id === id);
-        if (transactionToDelete) {
-          const updatedTransactions = currentTransactions.filter(transaction => transaction.id !== id);
-          this.transactionsSubject.next(updatedTransactions);
-          this.updateBalance(transactionToDelete, true);
-        }
-        return this.http.get<void>(this.balanceUrl);
+        this.transactionsSubject.next([...currentTransactions, newTransaction]);
       })
     );
   }
 
-  getTransactionsByMonthYear(month: number, year: number): Observable<Transaction[]> {
+  deleteTransaction(userId: number, transactionId: number): Observable<void> {
+    const url = `${this.baseUrl}/${userId}/transactions/${transactionId}`;
+    return this.http.delete<void>(url).pipe(
+      tap(() => {
+        const updatedTransactions = this.transactionsSubject.getValue().filter(t => t.id !== transactionId);
+        this.transactionsSubject.next(updatedTransactions);
+      })
+    );
+  }
+
+  clearDataOnLogout(): void {
+    this.transactionsSubject.next([]);
+  }
+
+  getTransactionsByType(userId: number, type: 'income' | 'expense'): Observable<Transaction[]> {
+    return this.transactions$.pipe(
+      map(transactions => transactions.filter(transaction => transaction.type === type))
+    );
+  }
+
+  getTransactionsByMonthYear(userId: number, month: number, year: number): Observable<Transaction[]> {
     return this.transactions$.pipe(
       map(transactions => transactions.filter(transaction => {
         const transactionDate = new Date(transaction.date);
-        return transactionDate.getUTCMonth() + 1 == month && transactionDate.getFullYear() == year;
+        return transactionDate.getUTCMonth() + 1 === month && transactionDate.getFullYear() === year;
       }))
     );
+  }
+
+  getBalance(userId: number): Observable<number> {
+    const url = `${this.baseUrl}/${userId}/saldo`;
+    return this.http.get<number>(url);
   }
 }

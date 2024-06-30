@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <main class="container-fluid d-flex w-100">
-  <app-sidenav></app-sidenav>
+  <app-sidenav *ngIf="showSideNav"></app-sidenav>
   <div class="container-fluid router-container">
     <router-outlet></router-outlet>
   </div>  

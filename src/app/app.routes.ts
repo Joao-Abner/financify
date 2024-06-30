@@ -6,25 +6,22 @@ import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard } from './auth.guard';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
 import { ExtractComponent } from './pages/extract/extract.component';
-import { AccountsComponent } from './pages/accounts/accounts.component';
-import { CcardsComponent } from './pages/ccards/ccards.component';
 import { GoalsComponent } from './pages/goals/goals.component';
+import { QuotesComponent } from './pages/quotes/quotes.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'transactions', component: TransactionsComponent },
-  { path: 'extract', component: ExtractComponent},
-  { path: 'accounts', component: AccountsComponent},
-  { path: 'ccards', component: CcardsComponent},
-  { path: 'goals', component: GoalsComponent},
+  { path: 'transactions', component: TransactionsComponent, canActivate: [AuthGuard] },
+  { path: 'extract', component: ExtractComponent, canActivate: [AuthGuard] },
+  { path: 'quotes', component: QuotesComponent, canActivate: [AuthGuard] },
+  { path: 'goals', component: GoalsComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-
-export class AppRountingModule {}
+export class AppRoutingModule {}

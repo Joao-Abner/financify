@@ -1,45 +1,63 @@
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor() {}
+  private apiUrl = 'http://localhost:3000/users';
+  private currentUser: { id: number, username: string } | null = null;
+  public authChangeEvent: EventEmitter<void> = new EventEmitter<void>();
 
-  register(username: string, password: string): boolean {
-    const userExists = !!localStorage.getItem(username);
-    if (!userExists) {
-      const user = { username, password };
-      localStorage.setItem(username, JSON.stringify(user));
-      return true;
-    } else {
-      return false;
-    }
+  constructor(private http: HttpClient) {}
+
+  login(username: string, password: string): Observable<boolean> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
+      map(response => {
+        if (response.username && response.id) {
+          this.currentUser = { id: response.id, username: response.username };
+          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+          this.authChangeEvent.emit();
+          return true;
+        } else {
+          return false;
+        }
+      })
+    );
   }
 
-  login(username: string, password: string): boolean {
-    const storedUser = JSON.parse(localStorage.getItem(username) || '{}');
-    if (storedUser && storedUser.password === password) {
-      localStorage.setItem('currentUser', JSON.stringify({ username }));
-      return true;
-    } else {
-      return false;
-    }
-  }
+  register(username: string, password: string): Observable<boolean> {
+    const newUser = { username, password, saldo: { total: 0 }, transactions: [] };
 
-  logout(): void {
-    localStorage.removeItem('currentUser');
+    return this.http.post<any>(this.apiUrl, newUser).pipe(
+      map(user => !!user)
+    );
   }
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('currentUser');
   }
 
-  getCurrentUser(): any {
-    const currentUser = localStorage.getItem('currentUser');
-    const user = currentUser ? JSON.parse(currentUser) : null;
-    return user ? user.username : null;
+  logout(): void {
+    this.currentUser = null;
+    localStorage.removeItem('currentUser');
+    this.authChangeEvent.emit();
+  }
+
+  getCurrentUser(): { id: number, username: string } | null {
+    if (!this.currentUser) {
+      const storedUser = localStorage.getItem('currentUser');
+      if (storedUser) {
+        this.currentUser = JSON.parse(storedUser);
+      }
+    }
+    return this.currentUser;
+  }
+
+  getCurrentUserId(): number | null {
+    const user = this.getCurrentUser();
+    return user ? user.id : null;
   }
 }

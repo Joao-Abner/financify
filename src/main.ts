@@ -11,6 +11,6 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideHttpClient(withFetch()),
-    importProvidersFrom(ReactiveFormsModule), provideAnimationsAsync()
+    importProvidersFrom(ReactiveFormsModule), provideAnimationsAsync(), provideAnimationsAsync(),
   ],
 });

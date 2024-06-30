@@ -1,1 +1,37 @@
-<app-sidenav></app-sidenav>
+<div class="container">
+  <h2>Meus Objetivos</h2>
+  <form [formGroup]="goalForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="amount" class="form-label">Valor</label>
+      <input type="number" id="amount" class="form-control" formControlName="amount">
+      <div *ngIf="goalForm.get('amount')?.invalid && goalForm.get('amount')?.dirty" class="text-danger">
+        O valor deve ser maior ou igual a 0.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Descrição</label>
+      <input type="text" id="description" class="form-control" formControlName="description">
+      <div *ngIf="goalForm.get('description')?.invalid && goalForm.get('description')?.dirty" class="text-danger">
+        Descrição é necessária.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-custom" [disabled]="goalForm.invalid">Registrar Objetivo</button>
+  </form>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">Descrição</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Diferença para o Saldo Atual</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let goal of goals">
+        <td>{{ goal.description }}</td>
+        <td>{{ goal.amount | currency: 'BRL' }}</td>
+        <td>{{ (goal.amount - saldoAtual) | currency: 'BRL' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

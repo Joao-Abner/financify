@@ -1,0 +1,63 @@
+.btn-primary {
+  margin-top: 0.5vw;
+  background-color: #000458;
+  border: #000458;
+  color: aliceblue;
+  font-size: 1.5vw;
+  padding: 0.5vw 2vw;
+}
+
+.btn-primary:hover {
+  background-color: #00bd84;
+  color: black;
+}
+
+.list-group {
+  margin-top: 0.5vw;
+}
+
+.list-group-item {
+  background-color: #f8f9fa;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  margin-bottom: 1vw;
+}
+
+.list-group-item h4 {
+  font-size: 2vw;
+  margin-bottom: 0.5vw;
+}
+
+.list-group-item p {
+  font-size: 1.5vw;
+  margin-bottom: 0.5vw;
+}
+
+@media (max-width: 768px) {
+  .btn-primary {
+    font-size: 3vw;
+    padding: 1vw 4vw;
+  }
+
+  .list-group-item h4 {
+    font-size: 3vw;
+  }
+
+  .list-group-item p {
+    font-size: 2vw;
+  }
+}
+
+@media (max-width: 575px) {
+  .btn {
+    font-size: 4vw;
+    padding: 3vw 5vw;
+  }
+
+  .list-group-item h4 {
+    font-size: 5vw;
+  }
+
+  .list-group-item p {
+    font-size: 4vw;
+  }
+}
