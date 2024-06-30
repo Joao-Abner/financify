@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { Goal, GoalService } from './goal.service';
 import { TransactionService } from '../transactions/transaction.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-goal',
@@ -17,12 +17,13 @@ export class GoalsComponent implements OnInit {
   userId: number | null;
   saldoAtual: number = 0;
   goalForm: FormGroup;
+  currentEditGoalId: number | null = null;
 
   constructor(
     private authService: AuthService,
     private goalService: GoalService,
     private transactionService: TransactionService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.userId = this.authService.getCurrentUserId();
     this.goalForm = this.fb.group({
@@ -57,6 +58,22 @@ export class GoalsComponent implements OnInit {
       Object.keys(this.goalForm.controls).forEach(key => {
         this.goalForm.controls[key].markAsDirty();
       });
+    }
+  }
+
+  deleteGoal(goalId: number): void {
+    if (this.userId) {
+      this.goalService.deleteGoal(this.userId, goalId).subscribe(
+        () => {
+          const index = this.goals.findIndex(goal => goal.id === goalId);
+          if (index !== -1) {
+            this.goals.splice(index, 1);
+          }
+        },
+        (error) => {
+          console.error('Erro ao excluir objetivo:', error);
+        }
+      );
     }
   }
 

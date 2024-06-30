@@ -10,19 +10,20 @@
           "type": "expense",
           "amount": 1000,
           "date": "2024-06-21",
-          "description": "Teste",
+          "description": "Teste1",
           "id": 1
         }
       ],
       "goals": [
         {
           "description": "Teste123",
-          "amount": "100"
+          "amount": "100",
+          "id": 1
         },
         {
-          "description": "Teste",
-          "amount": 1500,
-          "id": null
+          "description": "TESTES",
+          "amount": 10000,
+          "id": 3
         }
       ]
     },

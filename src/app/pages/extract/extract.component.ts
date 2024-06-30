@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { Transaction, TransactionService } from '../transactions/transaction.service';
 import { FormsModule } from '@angular/forms';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-extract',
@@ -33,6 +33,8 @@ export class ExtractComponent implements OnInit {
   ];
   years: number[] = [];
   userId: number | null;
+
+  editingTransaction: Transaction | null = null;
 
   constructor(
     private authService: AuthService,
@@ -81,9 +83,33 @@ export class ExtractComponent implements OnInit {
     }
   }
 
+  openEditModal(transaction: Transaction): void {
+    this.editingTransaction = { ...transaction };
+  }
+
+  closeEditModal(): void {
+    this.editingTransaction = null;
+  }
+
+  onEditTransaction(): void {
+    if (this.editingTransaction && this.userId) {
+      this.transactionService.updateTransaction(this.userId, this.editingTransaction).subscribe({
+        next: (updatedTransaction: Transaction) => {
+          const index = this.transactions.findIndex(t => t.id === updatedTransaction.id);
+          if (index !== -1) {
+            this.transactions[index] = updatedTransaction;
+          }
+          this.closeEditModal();
+        },
+        error: (error) => {
+          console.error('Erro ao atualizar transação:', error);
+        }
+      });
+    }
+  }
+
   formatDate(dateString: string): string {
     const date = new Date(dateString);
-    // Ajuste de fuso horário local
     date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
     return format(date, 'dd/MM/yyyy', { locale: ptBR });
   }
