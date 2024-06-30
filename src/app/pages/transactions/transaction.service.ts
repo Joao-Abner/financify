@@ -78,4 +78,19 @@ export class TransactionService {
     const url = `${this.baseUrl}/${userId}/saldo`;
     return this.http.get<number>(url);
   }
+
+  updateTransaction(userId: number, transaction: Transaction): Observable<Transaction> {
+    const url = `${this.baseUrl}/${userId}/transactions/${transaction.id}`;
+    return this.http.put<Transaction>(url, transaction).pipe(
+      tap(updatedTransaction => {
+        const currentTransactions = this.transactionsSubject.getValue();
+        const index = currentTransactions.findIndex(t => t.id === updatedTransaction.id);
+        if (index !== -1) {
+          currentTransactions[index] = updatedTransaction;
+          this.transactionsSubject.next(currentTransactions);
+        }
+      })
+    );
+  }
+  
 }
