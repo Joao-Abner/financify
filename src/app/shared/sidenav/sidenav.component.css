@@ -75,9 +75,10 @@ ul .active {
   }
 
   .navbar-toggler {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
-    left: 45%;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
     background: rgb(0,189,132);
     background: linear-gradient(90deg, rgba(0,189,132,1) 0%, #000458 100%);

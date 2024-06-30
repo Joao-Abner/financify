@@ -36,18 +36,18 @@
 
 @media (max-width: 768px) {
   .main-title {
-    font-size: 3.5vw;
+    font-size: 5vw;
   }
 
   .main-text { 
-    font-size: 4.5vw;
+    font-size: 6vw;
   }
 
   .card-title {
-    font-size: 3vw;
+    font-size: 4vw;
   }
 
   .card-text {
-    font-size: 2.5vw;
+    font-size: 3vw;
   }
 }

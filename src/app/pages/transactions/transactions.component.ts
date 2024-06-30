@@ -1,22 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Transaction, TransactionService } from './transaction.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TransactionService, Transaction } from './transaction.service';
+import { AuthService } from '../../auth.service';
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],                                                                                                                                                                                                                                                                                                                                                                                    
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.css'
+  styleUrls: ['./transactions.component.css']
 })
-export class TransactionsComponent implements OnInit{
+export class TransactionsComponent implements OnInit {
   transactionForm!: FormGroup;
+  userId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
     private transactionService: TransactionService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -27,6 +31,12 @@ export class TransactionsComponent implements OnInit{
       date: ['', [Validators.required, this.dateValidator]],
       description: ['', Validators.required]
     });
+
+    this.userId = this.authService.getCurrentUserId();
+    if (!this.userId) {
+      console.error('UserId não encontrado. Usuário não autenticado?');
+      // Tratar o erro conforme necessário, redirecionar para página de login, etc.
+    }
   }
 
   dateValidator(control: any): { [key: string]: any } | null {
@@ -38,17 +48,16 @@ export class TransactionsComponent implements OnInit{
   }
 
   onSubmit(): void {
-    if (this.transactionForm.valid) {
+    if (this.transactionForm.valid && this.userId) {
       const formValue = this.transactionForm.value;
       const transaction: Transaction = {
         ...formValue,
-        date: this.convertDateToISO(formValue.date) // Converte a data para o formato ISO
+        date: this.convertDateToISO(formValue.date)
       };
-      this.transactionService.addTransaction(transaction).subscribe(() => {
+      this.transactionService.addTransaction(this.userId, transaction).subscribe(() => {
         this.router.navigate(['/']);
       });
     } else {
-      // Exibe mensagens de erro caso o formulário não seja válido
       Object.keys(this.transactionForm.controls).forEach(key => {
         this.transactionForm.controls[key].markAsDirty();
       });
@@ -58,5 +67,14 @@ export class TransactionsComponent implements OnInit{
   private convertDateToISO(date: string): string {
     const [day, month, year] = date.split('/');
     return `${year}-${month}-${day}`;
+  }
+
+  getTransactionsByMonthYear(month: number, year: number): Observable<Transaction[]> {
+    if (this.userId) {
+      return this.transactionService.getTransactionsByMonthYear(this.userId, month, year);
+    } else {
+      console.error('UserId não encontrado. Não é possível buscar transações.');
+      return new Observable<Transaction[]>(); // Retornar um observable vazio ou tratar o erro conforme necessário
+    }
   }
 }

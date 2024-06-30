@@ -1,0 +1,18 @@
+<main class="container-fluid d-flex flex-column w-75">
+  <div class="align-self-center">
+    <button class="btn btn-primary mb-3" (click)="fetchQuotesData()">Atualizar cotações</button>
+  </div>
+  <div *ngIf="quotes && quotes.length > 0" class="d-flex flex-column align-items-center">
+    <ul class="list-group w-75">
+      <li *ngFor="let quote of quotes" class="list-group-item">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+          <div>
+            <h4>{{ quote.code }}/{{ quote.codein }}</h4>
+            <p>{{ quote.name }}</p>
+            <p>{{ quote.ask | currency: "BRL" }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</main>

@@ -1,10 +1,10 @@
-<div class="container-fluid d-flex flex-column w-75 bg-main-info mt-4 p-4 rounded">
+<div class="container-fluid d-flex flex-column w-75 bg-main-info p-4 rounded">
   <h2 class="main-title text-white">Extrato de Transações</h2>
 
   <div class="form-group row mb-3">
     <label class="col-sm-2 col-form-label text-white main-text">Mês e Ano:</label>
     <div class="col-sm-5">
-      <select class="form-control" [(ngModel)]="selectedMonth" (change)="loadTransactions()">
+      <select class="form-control mb-1" [(ngModel)]="selectedMonth" (change)="loadTransactions()">
         <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
       </select>
     </div>
@@ -28,10 +28,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let transaction of transactions">
-          <td>{{ transaction.date }}</td>
-          <td>{{ transaction.type }}</td>
+          <td>{{ formatDate(transaction.date) }}</td>
+          <td>{{ getTransactionType(transaction.type) }}</td>
           <td>{{ transaction.description }}</td>
-          <td>{{ transaction.amount | currency }}</td>
+          <td>{{ transaction.amount | currency: 'BRL' }}</td>
           <td>
             <button class="btn btn-danger" (click)="onDeleteTransaction(transaction)">Excluir</button>
           </td>
