@@ -140,6 +140,50 @@ server.delete('/users/:userId/transactions/:transactionId', async (req, res) => 
   }
 });
 
+server.put('/users/:userId/transactions/:transactionId', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const transactionId = parseInt(req.params.transactionId);
+    let db = await readDatabase();
+    const user = db.users.find(user => user.id === userId);
+
+    if (!user || !user.transactions) {
+      return res.status(404).json({ error: 'Usuário ou transações não encontradas' });
+    }
+
+    const transactionIndex = user.transactions.findIndex(t => t.id === transactionId);
+    if (transactionIndex === -1) {
+      return res.status(404).json({ error: 'Transação não encontrada' });
+    }
+
+    const updatedTransaction = { ...user.transactions[transactionIndex], ...req.body };
+    user.transactions[transactionIndex] = updatedTransaction;
+
+    // Atualiza o saldo do usuário
+    if (req.body.type && req.body.amount) {
+      const originalTransaction = user.transactions[transactionIndex];
+      if (originalTransaction.type === 'income') {
+        user.saldo -= originalTransaction.amount;
+      } else {
+        user.saldo += originalTransaction.amount;
+      }
+
+      if (updatedTransaction.type === 'income') {
+        user.saldo += updatedTransaction.amount;
+      } else {
+        user.saldo -= updatedTransaction.amount;
+      }
+    }
+
+    await writeDatabase(db);
+
+    res.status(200).json(updatedTransaction);
+  } catch (error) {
+    console.error('Erro ao atualizar transação:', error);
+    res.status(500).json({ error: 'Erro interno ao atualizar transação' });
+  }
+});
+
 server.get('/users/:userId/goals', async (req, res) => {
   try {
     const userId = parseInt(req.params.userId);
@@ -175,6 +219,31 @@ server.post('/users/:userId/goals', async (req, res) => {
   } catch (error) {
     console.error('Erro ao adicionar objetivo:', error);
     res.status(500).json({ error: 'Erro interno ao adicionar objetivo' });
+  }
+});
+
+server.delete('/users/:userId/goals/:goalId', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const goalId = parseInt(req.params.goalId);
+    let db = await readDatabase();
+    const user = db.users.find(user => user.id === userId);
+
+    if (!user || !user.goals) {
+      return res.status(404).json({ error: 'Objetivos não encontrados para o usuário' });
+    }
+
+    const goalIndex = user.goals.findIndex(goal => goal.id === goalId);
+    if (goalIndex >= 0) {
+      user.goals.splice(goalIndex, 1);
+      await writeDatabase(db);
+      res.status(204).end();
+    } else {
+      res.status(404).json({ error: 'Objetivo não encontrado' });
+    }
+  } catch (error) {
+    console.error('Erro ao deletar objetivo:', error);
+    res.status(500).json({ error: 'Erro interno ao deletar objetivo' });
   }
 });
 

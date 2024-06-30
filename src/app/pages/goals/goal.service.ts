@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 export interface Goal {
   id?: number;
@@ -25,5 +24,10 @@ export class GoalService {
   addGoal(userId: number, goal: Goal): Observable<Goal> {
     const url = `${this.baseUrl}/${userId}/goals`;    
     return this.http.post<Goal>(url, goal);
+  }
+
+  deleteGoal(userId: number, goalId: number): Observable<void> {
+    const url = `${this.baseUrl}/${userId}/goals/${goalId}`;
+    return this.http.delete<void>(url);
   }
 }
