@@ -9,7 +9,7 @@ const dbFilePath = path.resolve(__dirname, "db.json");
 
 // Configuração do CORS
 server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "https://joao-abner.github.io/");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
