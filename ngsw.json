@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1719953892848,
+  "timestamp": 1719968489437,
   "index": "/financify/index.html",
   "assetGroups": [
     {
@@ -15,7 +15,7 @@
         "/financify/chunk-TTXD2FDT.js",
         "/financify/favicon.ico",
         "/financify/index.html",
-        "/financify/main-XMQNHXPW.js",
+        "/financify/main-CDDUW2HV.js",
         "/financify/manifest.webmanifest",
         "/financify/polyfills-6EAL64PA.js",
         "/financify/scripts-EEEIPNC3.js",
@@ -60,8 +60,8 @@
     "/financify/chunk-IELE2F6O.js": "1136961f26fce480df32e0cb683e0fac79e89b52",
     "/financify/chunk-TTXD2FDT.js": "de958da29ad561884442c038d10803221f2cdc37",
     "/financify/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
-    "/financify/index.html": "ca48dc69ce6f9c63a84c466fb2f00cb47ed11ec9",
-    "/financify/main-XMQNHXPW.js": "737239387c0c24c70eb480164f81ca10ce510f47",
+    "/financify/index.html": "f6fbbf1bc3abdecaf6db412efa24505a8cb4e37d",
+    "/financify/main-CDDUW2HV.js": "04b672506cb63e5cab79c4298f349627553cfdb7",
     "/financify/manifest.webmanifest": "291bd668936261088242f7f63df1530e7fb6b4bb",
     "/financify/media/bootstrap-icons-OCU552PF.woff": "d5831fd39baf13aff7626e483b9a089730f18604",
     "/financify/media/bootstrap-icons-X6UQXWUS.woff2": "020c3c6f9280a315e8425d7f92e15bcd0cdda1b2",
