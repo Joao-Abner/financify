@@ -9,10 +9,10 @@ export interface Goal {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GoalService {
-  private baseUrl = 'http://localhost:3000/users';
+  private baseUrl = 'https://json-server-financify-7upx.onrender.com/users';
 
   constructor(private http: HttpClient) {}
 
@@ -22,7 +22,7 @@ export class GoalService {
   }
 
   addGoal(userId: number, goal: Goal): Observable<Goal> {
-    const url = `${this.baseUrl}/${userId}/goals`;    
+    const url = `${this.baseUrl}/${userId}/goals`;
     return this.http.post<Goal>(url, goal);
   }
 
