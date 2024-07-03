@@ -5,17 +5,17 @@ import { map, tap } from 'rxjs/operators';
 
 export interface Transaction {
   id?: number;
-  type: "income" | "expense";
+  type: 'income' | 'expense';
   amount: number;
   date: string;
   description: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TransactionService {
-  private baseUrl = 'http://localhost:3000/users';
+  private baseUrl = 'https://json-server-financify-7upx.onrender.com/users';
 
   private transactionsSubject = new BehaviorSubject<Transaction[]>([]);
   transactions$ = this.transactionsSubject.asObservable();
@@ -30,15 +30,18 @@ export class TransactionService {
 
   getTransactions(userId: number): Observable<Transaction[]> {
     const url = `${this.baseUrl}/${userId}/transactions`;
-    return this.http.get<Transaction[]>(url).pipe(
-      tap(transactions => this.transactionsSubject.next(transactions))
-    );
+    return this.http
+      .get<Transaction[]>(url)
+      .pipe(tap((transactions) => this.transactionsSubject.next(transactions)));
   }
 
-  addTransaction(userId: number, transaction: Transaction): Observable<Transaction> {
+  addTransaction(
+    userId: number,
+    transaction: Transaction
+  ): Observable<Transaction> {
     const url = `${this.baseUrl}/${userId}/transactions`;
     return this.http.post<Transaction>(url, transaction).pipe(
-      tap(newTransaction => {
+      tap((newTransaction) => {
         const currentTransactions = this.transactionsSubject.getValue();
         this.transactionsSubject.next([...currentTransactions, newTransaction]);
       })
@@ -49,7 +52,9 @@ export class TransactionService {
     const url = `${this.baseUrl}/${userId}/transactions/${transactionId}`;
     return this.http.delete<void>(url).pipe(
       tap(() => {
-        const updatedTransactions = this.transactionsSubject.getValue().filter(t => t.id !== transactionId);
+        const updatedTransactions = this.transactionsSubject
+          .getValue()
+          .filter((t) => t.id !== transactionId);
         this.transactionsSubject.next(updatedTransactions);
       })
     );
@@ -59,18 +64,32 @@ export class TransactionService {
     this.transactionsSubject.next([]);
   }
 
-  getTransactionsByType(userId: number, type: 'income' | 'expense'): Observable<Transaction[]> {
+  getTransactionsByType(
+    userId: number,
+    type: 'income' | 'expense'
+  ): Observable<Transaction[]> {
     return this.transactions$.pipe(
-      map(transactions => transactions.filter(transaction => transaction.type === type))
+      map((transactions) =>
+        transactions.filter((transaction) => transaction.type === type)
+      )
     );
   }
 
-  getTransactionsByMonthYear(userId: number, month: number, year: number): Observable<Transaction[]> {
+  getTransactionsByMonthYear(
+    userId: number,
+    month: number,
+    year: number
+  ): Observable<Transaction[]> {
     return this.transactions$.pipe(
-      map(transactions => transactions.filter(transaction => {
-        const transactionDate = new Date(transaction.date);
-        return transactionDate.getUTCMonth() + 1 === month && transactionDate.getFullYear() === year;
-      }))
+      map((transactions) =>
+        transactions.filter((transaction) => {
+          const transactionDate = new Date(transaction.date);
+          return (
+            transactionDate.getUTCMonth() + 1 === month &&
+            transactionDate.getFullYear() === year
+          );
+        })
+      )
     );
   }
 
@@ -79,12 +98,17 @@ export class TransactionService {
     return this.http.get<number>(url);
   }
 
-  updateTransaction(userId: number, transaction: Transaction): Observable<Transaction> {
+  updateTransaction(
+    userId: number,
+    transaction: Transaction
+  ): Observable<Transaction> {
     const url = `${this.baseUrl}/${userId}/transactions/${transaction.id}`;
     return this.http.put<Transaction>(url, transaction).pipe(
-      tap(updatedTransaction => {
+      tap((updatedTransaction) => {
         const currentTransactions = this.transactionsSubject.getValue();
-        const index = currentTransactions.findIndex(t => t.id === updatedTransaction.id);
+        const index = currentTransactions.findIndex(
+          (t) => t.id === updatedTransaction.id
+        );
         if (index !== -1) {
           currentTransactions[index] = updatedTransaction;
           this.transactionsSubject.next(currentTransactions);
@@ -92,5 +116,4 @@ export class TransactionService {
       })
     );
   }
-  
 }
