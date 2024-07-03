@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "UserTeste",
+      "password": "Asd123456",
+      "saldo": 10,
+      "transactions": [
+        {
+          "type": "expense",
+          "amount": 1000,
+          "date": "2024-06-21",
+          "description": "Teste1",
+          "id": 1
+        }
+      ],
+      "goals": [
+        {
+          "description": "Teste123",
+          "amount": "100",
+          "id": 1
+        },
+        {
+          "description": "TESTES",
+          "amount": 10000,
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "username": "Raul",
+      "password": "AAsd123456",
+      "saldo": 2000,
+      "transactions": [],
+      "goals": []
+    }
+  ]
+}

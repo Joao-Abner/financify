@@ -1,0 +1,87 @@
+<div class="container-fluid d-flex flex-column w-75 bg-main-info p-4 rounded">
+  <h2 class="main-title text-white">Extrato de Transações</h2>
+
+  <div class="form-group row mb-3">
+    <label class="col-sm-2 col-form-label text-white main-text">Mês e Ano:</label>
+    <div class="col-sm-5">
+      <select class="form-control mb-1" [(ngModel)]="selectedMonth" (change)="loadTransactions()">
+        <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+      </select>
+    </div>
+    <div class="col-sm-5">
+      <select class="form-control" [(ngModel)]="selectedYear" (change)="loadTransactions()">
+        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-responsive mx-auto" style="max-width: 90%;">
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th>Data</th>
+          <th>Tipo</th>
+          <th>Descrição</th>
+          <th>Valor</th>
+          <th>Editar</th>
+          <th>Excluir</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>{{ formatDate(transaction.date) }}</td>
+          <td>{{ getTransactionType(transaction.type) }}</td>
+          <td>{{ transaction.description }}</td>
+          <td>{{ transaction.amount | currency: 'BRL' }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openEditModal(transaction)">Editar</button>
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="onDeleteTransaction(transaction)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal de edição -->
+<div *ngIf="editingTransaction" class="modal show d-block" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between">
+        <h5 class="modal-title">Editar Transação</h5>
+        <button type="button" class="btn close" (click)="closeEditModal()">
+          <span class="bi bi-x-lg"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #editForm="ngForm">
+          <div class="form-group">
+            <label for="editDate">Data</label>
+            <input type="date" id="editDate" [(ngModel)]="editingTransaction.date" name="date" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="editType">Tipo</label>
+            <select id="editType" [(ngModel)]="editingTransaction.type" name="type" class="form-control" required>
+              <option value="income">Receita</option>
+              <option value="expense">Despesa</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editDescription">Descrição</label>
+            <input type="text" id="editDescription" [(ngModel)]="editingTransaction.description" name="description" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="editAmount">Valor</label>
+            <input type="number" id="editAmount" [(ngModel)]="editingTransaction.amount" name="amount" class="form-control" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeEditModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="onEditTransaction()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
