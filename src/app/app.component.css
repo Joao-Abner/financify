@@ -15,6 +15,7 @@
     padding: 5vw;
   }
 
+<<<<<<< HEAD
   h1,
   h2,
   h3,
@@ -24,6 +25,9 @@
   p,
   .card-title,
   .card-text {
+=======
+  h1, h2, h3, h4, h5, h6, p, .card-title, .card-text {
+>>>>>>> dff2b1e4d321b4e11f75c37945b1e5e6355e2069
     font-size: 4vw;
   }
 
@@ -36,8 +40,12 @@
     font-size: 4vw;
   }
 
+<<<<<<< HEAD
   .form-control,
   .form-select {
+=======
+  .form-control, .form-select {
+>>>>>>> dff2b1e4d321b4e11f75c37945b1e5e6355e2069
     font-size: 4vw;
     padding: 3vw;
   }

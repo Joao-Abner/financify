@@ -1,7 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 =======
+=======
+>>>>>>> dff2b1e4d321b4e11f75c37945b1e5e6355e2069
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './shared/navbar/navbar.component';
@@ -14,10 +17,14 @@ import { CommonModule } from '@angular/common';
   selector: 'app-root',
   standalone: true,
 <<<<<<< HEAD
+<<<<<<< HEAD
   imports: [RouterOutlet],
 =======
   imports: [CommonModule , RouterOutlet, NavbarComponent , SidenavComponent , RouterLink , RouterLinkActive, RouterModule],
 >>>>>>> 7c04d8b (Adicionar componente de objetivos e outros)
+=======
+  imports: [CommonModule , RouterOutlet, NavbarComponent , SidenavComponent , RouterLink , RouterLinkActive, RouterModule],
+>>>>>>> dff2b1e4d321b4e11f75c37945b1e5e6355e2069
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

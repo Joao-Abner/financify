@@ -30,4 +30,7 @@ export const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
+<<<<<<< HEAD
 >>>>>>> 7c04d8b (Adicionar componente de objetivos e outros)
+=======
+>>>>>>> dff2b1e4d321b4e11f75c37945b1e5e6355e2069

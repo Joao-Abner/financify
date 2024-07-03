@@ -94,7 +94,6 @@
               "src/assets",
               "src/assets/images",
               "src/manifest.webmanifest"
->>>>>>> 1c8d705 ("Added service worker configuration and updated angular.json, package-lock.json, and package.json files" (ng add @angular/pwa))
             ],
             "styles": [
               "src/styles.css"

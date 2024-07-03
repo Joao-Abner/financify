@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+<<<<<<< HEAD
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+=======
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+>>>>>>> dff2b1e4d321b4e11f75c37945b1e5e6355e2069
 
 html,
 body {
