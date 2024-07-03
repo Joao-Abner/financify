@@ -15,7 +15,7 @@ export interface Transaction {
   providedIn: 'root',
 })
 export class TransactionService {
-  private baseUrl = 'https://json-server-financify.vercel.app/users';
+  private baseUrl = 'http://localhost:3000/users';
 
   private transactionsSubject = new BehaviorSubject<Transaction[]>([]);
   transactions$ = this.transactionsSubject.asObservable();
