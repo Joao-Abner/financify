@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://json-server-financify-7upx.onrender.com/users';
+  private apiUrl = 'https://json-server-financify.vercel.app/users';
   private currentUser: { id: number; username: string } | null = null;
   public authChangeEvent: EventEmitter<void> = new EventEmitter<void>();
 
