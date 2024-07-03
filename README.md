@@ -6,6 +6,10 @@ https://joao-abner.github.io/financify/
 
 https://www.figma.com/design/1ay4y9WmusNInprqWxPvTB/Financify?node-id=0-1&t=GVw8Mc28LieRVXPF-0
 
+# Link documento apresentação
+
+https://docs.google.com/document/d/1uJODThCsQSV3WB1V3ioY3A3LtwRiyvx49NkNi41e4Us/edit?usp=sharing
+
 # Checklist
 
 #### RA1 - Prototipar e projetar interfaces gráficas de usuário, considerando princípios de usabilidade e experiência do usuário.
