@@ -12,7 +12,7 @@ export interface Goal {
   providedIn: 'root',
 })
 export class GoalService {
-  private baseUrl = 'https://json-server-financify.vercel.app/users';
+  private baseUrl = 'http://localhost:3000/users';
 
   constructor(private http: HttpClient) {}
 
